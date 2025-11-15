@@ -1,7 +1,5 @@
 User Directory (Offline-First Android App)
 
-A simple offline-capable User Directory app built with Kotlin, Jetpack Compose, Room Database, Retrofit, and MVVM architecture.
-
 This project demonstrates how to build a fully offline-first Android application that:
 
 Fetches user data from a public API
