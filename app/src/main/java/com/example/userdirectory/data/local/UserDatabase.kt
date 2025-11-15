@@ -1,6 +1,7 @@
 package com.example.userdirectory.data.local
 
 import android.content.Context
+import android.util.Log
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -25,9 +26,12 @@ abstract class UserDatabase : RoomDatabase() {
                     UserDatabase::class.java,
                     "user_db"
                 ).build()
+
+                Log.d("DEBUG_DB", "Room Database initialized")
                 INSTANCE = instance
                 instance
             }
         }
     }
+
 }

@@ -9,22 +9,25 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface UserDao {
 
-    // Single source of truth for all users
-    @Query("SELECT * FROM users ORDER BY name ASC")
+    // Requirement #3: UI must read FROM ROOM ONLY (Single Source of Truth)
+    @Query("SELECT * FROM users ORDER BY id ASC")
     fun getUsers(): Flow<List<UserEntity>>
 
-    // Search by name or email (local search)
+    // Requirement #5: Local search (NO API call)
     @Query("""
-        SELECT * FROM users 
-        WHERE name LIKE '%' || :query || '%' 
-           OR email LIKE '%' || :query || '%' 
-        ORDER BY name ASC
+        SELECT * FROM users
+        WHERE name LIKE '%' || :query || '%'
+           OR email LIKE '%' || :query || '%'
+        ORDER BY id ASC
     """)
     fun searchUsers(query: String): Flow<List<UserEntity>>
 
+    // Requirement #1: Store users in Room using REPLACE to update existing rows
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertUsers(users: List<UserEntity>)
 
+    // Used when refreshing from API
     @Query("DELETE FROM users")
     suspend fun clearUsers()
 }
+
